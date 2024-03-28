@@ -1,16 +1,25 @@
 import TelegramBot from 'node-telegram-bot-api';
-import { TG_AUTH_TOKEN, API_SERVICE_URL, CLAN_ID, maxStarsPossible, commands } from './constants.js';
+import express from 'express';
+import { PORT, TG_AUTH_TOKEN, API_SERVICE_URL, CLAN_ID, maxStarsPossible, commands, endpoints } from './constants.js';
 import { getTimeLeftText, getWarResultsText } from './helpers.js';
 import { sendRequest } from './request.js';
 
-const bot = new TelegramBot(TG_AUTH_TOKEN, { polling: true });
+const app = express();
 
-const currentWarEndpoint = `${API_SERVICE_URL}/clans/${CLAN_ID}/currentwar`;
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at port ${PORT}...`);
+});
+
+const bot = new TelegramBot(TG_AUTH_TOKEN, { polling: true });
 
 bot.onText(commands.cw, async (msg) => {
   const chatId = msg.chat.id;
   try {
-    const data = await sendRequest(currentWarEndpoint);
+    const data = await sendRequest(endpoints.currentWar);
     const { state, teamSize, attacksPerMember, startTime, endTime, clan, opponent } = data;
 
     let message = '';
