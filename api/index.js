@@ -7,7 +7,7 @@ import { sendRequest } from './request.js';
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Server for cw tracker tg bot');
 });
 
 app.listen(PORT, () => {
