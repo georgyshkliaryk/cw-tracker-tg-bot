@@ -1,3 +1,5 @@
+import { warStateTypes } from './constants.js';
+
 const getDateFromString = (dateString) => {
   const year = parseInt(dateString.substring(0, 4));
   const month = parseInt(dateString.substring(4, 6)) - 1;
@@ -43,31 +45,34 @@ const getTimeTillEnd = (endTime) => {
 };
 
 export const getTimeLeftText = (state, endTime, startTime) => {
-  if (state === 'inWar') {
+  if (state === warStateTypes.war) {
     return `war ends in ${getTimeTillEnd(endTime)}`;
   }
-  if (state === 'preparation') {
+  if (state === warStateTypes.preparation) {
     return `war starts in ${getTimeTillEnd(startTime)}`;
   }
 
-  return `war ended`;
+  return 'war ended';
 };
 
 export const getWarResultsText = (state, clanStars, opponentStars, destruction, opponentDestruction) => {
-  if (state !== 'warEnded') {
-    return '';
+  if (state === warStateTypes.war) {
+    return '[IN WAR]';
+  }
+  if (state === warStateTypes.preparation) {
+    return '[PREPARATION]';
   }
   if (clanStars > opponentStars) {
-    return `WIN`;
+    return '[ENDED - WIN]';
   }
   if (clanStars < opponentStars) {
-    return `LOSE`;
+    return '[ENDED - LOSE]';
   }
   if (destruction > opponentDestruction) {
-    return `WIN`;
+    return '[ENDED - WIN]';
   }
   if (destruction < opponentDestruction) {
-    return `LOSE`;
+    return '[ENDED - LOSE]';
   }
-  return `DRAW`;
+  return '[ENDED - DRAW]';
 };

@@ -29,12 +29,12 @@ ${clan.name} vs ${opponent.name}
 ${getWarResultsText(state, clan.stars, opponent.stars, clan.destructionPercentage, opponent.destructionPercentage)}
 ${clan.stars} : ${opponent.stars}
 ${getTimeLeftText(state, endTime, startTime)}
-______________________________________
+
 ${clan.name}
 stars: ${clan.stars}/${maxStarsPossible * teamSize}
 attacks: ${clan.attacks}/${attacksPerMember * teamSize}
 destruction: ${clan.destructionPercentage}%
-______________________________________
+
 ${opponent.name}
 stars: ${opponent.stars}/${maxStarsPossible * teamSize}
 attacks: ${opponent.attacks}/${attacksPerMember * teamSize}
@@ -55,6 +55,6 @@ bot.onText(commands.getBothCw(), async (msg) => {
     const message = await getCwInfo(endpoint);
     bot.sendMessage(chatId, message);
   } catch (error) {
-    bot.sendMessage(chatId, `Failed to fetch data, try again later. [${error.message}]`);
+    bot.sendMessage(chatId, `Failed to fetch data. [${error.message}]`);
   }
 });

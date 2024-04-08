@@ -15,11 +15,20 @@ export const commands = {
     return new RegExp(`${this.cw}|${this.cw2}`);
   },
 };
+
 export const endpoints = {
   currentWar: `${API_SERVICE_URL}/clans/${CLAN_ID}/currentwar`,
   currentWar2: `${API_SERVICE_URL}/clans/${CLAN_ID2}/currentwar`,
 };
+
 export const commandsToEndpointMap = {
   [commands.cw]: endpoints.currentWar,
   [commands.cw2]: endpoints.currentWar2,
+};
+
+export const warStateTypes = {
+  war: 'inWar',
+  preparation: 'preparation',
+  ended: 'warEnded',
+  notStarted: 'notStarted',
 };
