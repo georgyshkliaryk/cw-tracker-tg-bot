@@ -4,6 +4,7 @@ export const TG_AUTH_TOKEN = process.env.TG_AUTH_TOKEN;
 export const COC_AUTH_TOKEN = process.env.COC_AUTH_TOKEN;
 export const PORT = process.env.PORT || 3000;
 export const API_SERVICE_URL = 'https://cocproxy.royaleapi.dev/v1';
+export const SERVER_URL = 'https://cw-tracker-tg-bot.onrender.com/';
 export const CLAN_ID = '%23YLQQUY2U';
 export const CLAN_ID2 = '%232RGQL98GL';
 

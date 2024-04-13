@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { COC_AUTH_TOKEN } from './constants.js';
 
 const commonHeaders = {
   accept: 'application/json',
-  Authorization: `Bearer ${COC_AUTH_TOKEN}`,
 };
 
 export const sendRequest = async (url, headers) => {

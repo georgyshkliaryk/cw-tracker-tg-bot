@@ -1,6 +1,15 @@
 import TelegramBot from 'node-telegram-bot-api';
 import express from 'express';
-import { PORT, TG_AUTH_TOKEN, maxStarsPossible, commands, commandsToEndpointMap, endpoints } from './constants.js';
+import {
+  PORT,
+  SERVER_URL,
+  COC_AUTH_TOKEN,
+  TG_AUTH_TOKEN,
+  maxStarsPossible,
+  commands,
+  commandsToEndpointMap,
+  endpoints,
+} from './constants.js';
 import { getTimeLeftText, getWarResultsText } from './helpers.js';
 import { sendRequest } from './request.js';
 
@@ -17,7 +26,11 @@ app.listen(PORT, () => {
 const bot = new TelegramBot(TG_AUTH_TOKEN, { polling: true });
 
 const getCwInfo = async (endpoint) => {
-  const data = await sendRequest(endpoint);
+  const authHeaders = {
+    Authorization: `Bearer ${COC_AUTH_TOKEN}`,
+  };
+
+  const data = await sendRequest(endpoint, authHeaders);
   const { state, teamSize, attacksPerMember, startTime, endTime, clan, opponent } = data;
 
   let message = '';
@@ -58,3 +71,13 @@ bot.onText(commands.getBothCw(), async (msg) => {
     bot.sendMessage(chatId, `Failed to fetch data. [${error.message}]`);
   }
 });
+
+// server wake up
+const wakeUpServer = () => {
+  sendRequest(SERVER_URL);
+};
+
+const tenMinutes = 10 * 60 * 1000;
+
+setInterval(wakeUpServer, tenMinutes);
+wakeUpServer();
