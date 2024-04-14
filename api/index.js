@@ -33,11 +33,10 @@ const getCwInfo = async (endpoint) => {
   const data = await sendRequest(endpoint, authHeaders);
   const { state, teamSize, attacksPerMember, startTime, endTime, clan, opponent } = data;
 
-  let message = '';
   if (state === 'notInWar') {
-    message = `${clan.name} is not in war`;
+    return `clan is not currently in war`;
   }
-  message = `
+  return `
 ${clan.name} vs ${opponent.name}
 ${getWarResultsText(state, clan.stars, opponent.stars, clan.destructionPercentage, opponent.destructionPercentage)}
 ${clan.stars} : ${opponent.stars}
@@ -53,8 +52,6 @@ stars: ${opponent.stars}/${maxStarsPossible * teamSize}
 attacks: ${opponent.attacks}/${attacksPerMember * teamSize}
 destruction: ${opponent.destructionPercentage}%
 `;
-
-  return message;
 };
 
 bot.onText(commands.getBothCw(), async (msg) => {

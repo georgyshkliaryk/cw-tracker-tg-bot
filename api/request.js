@@ -18,11 +18,11 @@ export const sendRequest = async (url, headers) => {
     const data = response.data;
     if (!data) {
       const error = new Error('HTTP status code: ' + response.status);
-      throw error;
+      console.error(error);
     }
     return data;
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Unknown error.';
-    throw Error(message);
+    console.error(message);
   }
 };
